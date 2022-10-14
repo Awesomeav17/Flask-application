@@ -1,14 +1,3 @@
-# Python Activity
-#
-# Fill in the code for the functions below.
-# The starter code for each function includes a 'return'
-# which is just a placeholder for your code. Make sure to add what is going to be returned.
-
-
-# Part A. count_threes
-# Define a function count_threes(n) that takes an int and
-# returns the number of multiples of 3 in the range from 0
-# to n (including n).
 
 def count_threes(n):
   	return int(n/3)
