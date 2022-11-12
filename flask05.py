@@ -68,12 +68,22 @@ def new_note():
         a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
 
         return render_template('new.html', user=a_user)
-@app.route('/notes/edit/<note_id>')
+@app.route('/notes/edit/<note_id>', methods = ['GET','POST'])
 def update_note(note_id):
-    a_user = db.session.query(User).filter_by(email = 'mogli@uncc.edu').first() 
-    my_note = db.session.query(Note).filter_by(id = note_id).first() 
+    if request.method == 'POST': 
+        title = request.form['title']
+        text =  request.form['noteText'] 
+        note = db.session.query(Note).filter_by(id = note_id).first() 
+        note.title = title 
+        note.text = text 
+        db.session.add(note) 
+        db.session.commit() 
+        return redirect(url_for('get_notes'))
+    else: 
+        a_user = db.session.query(User).filter_by(id = note_id).first() 
+        my_note = db.session.query(Note).filter_by(id=note_id).first() 
 
-    return render_template('new.html', note=my_note, user = a_user) 
+        return render_template('new.html', note = my_note, user=a_user)
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
 
 # To see the web page in your web browser, go to the url,
