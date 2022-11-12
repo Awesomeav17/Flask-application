@@ -41,20 +41,18 @@ def get_notes():
     a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
     my_notes = db.session.query(Note).all()
 
-    return render_template('notes.html', notes=my_notes, user= a_user)
+    return render_template('notes.html', notes=my_notes, user = a_user)
 @app.route('/notes/<note_id>')
 def get_note(note_id): 
     a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
     my_note = db.session.query(Note).filter_by(id=note_id)
 
-    return render_template('note.html', notes = my_note ,user  = a_user)
+    return render_template('note.html', note=my_note , user = a_user)
 
 @app.route('/notes/new', methods = ['GET', 'POST'])
 #check method used for request
 
 def new_note(): 
-    a_user = {'name': 'Avnish', 'email': 'mogli@uncc.edu'}
-    print('request method is', request.method)
     if request.method == 'POST': 
         title = request.form['title']
         text=request.form['noteText']
@@ -64,6 +62,8 @@ def new_note():
         new_record = Note(title, text, today)
         db.session.add(new_record)
         db.session.commit()
+        
+        return redirect(url_for('get_notes'))
     else: 
         a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
 
