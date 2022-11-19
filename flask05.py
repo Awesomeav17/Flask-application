@@ -11,6 +11,9 @@ from models import Note as Note
 from models import User as User
 
 
+from forms import RegisterForm
+
+
 
 
 
